@@ -67,30 +67,12 @@
 let http = require('http'),
 
 // TODO ? use path ?
+    getTopStories = require('./scripts/get_top_stories'),
     transformTopStories = require('./scripts/transform_top_stories');
 
-const CONTAINERS_LOCATION = 'zoneContents',
-    SOURCE_FEED_URL = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json',
-    TOP_STORIES_TITLE = 'Top stories',
-    TOP_STORIES_TYPE = 'container';
+const SOURCE_FEED_URL = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
 
 
-function findTopStoriesContainer(zoneContents) {
-    return zoneContents.find(function (content) {
-        return content.type === TOP_STORIES_TYPE && content.title === TOP_STORIES_TITLE;
-    });
-}
-function genNewFeed(cnnFeed, next) {
-    let newFeed = [],
-        topStoriesContainer = findTopStoriesContainer(cnnFeed[CONTAINERS_LOCATION]);
-    // TODO ? throw err if top stories container or .containerContents not found
-    if (!topStoriesContainer.containerContents) {
-        return next(newFeed);
-    }
-    newFeed = transformTopStories(topStoriesContainer);
-
-    return next(newFeed);
-}
 function getCnnFeed(next) {
     http.get(SOURCE_FEED_URL, function (res) {
         let body = '';
@@ -110,5 +92,9 @@ function getCnnFeed(next) {
 
 
 getCnnFeed(function (cnnFeed) {
-    genNewFeed(cnnFeed, console.log);
+    getTopStories(cnnFeed, function (topStories) {
+        transformTopStories(topStories, function (newFeed) {
+            console.log(newFeed);
+        });
+    });
 });

@@ -59,8 +59,10 @@ function transformArticle(article) {
 }
 
 
-module.exports = function (topStoriesContainer) {
-    return topStoriesContainer.containerContents.reduce(function (newFeed, story) {
+module.exports = function (topStories, next) {
+    var newFeed = topStories.reduce(function (newFeed, story) {
         return newFeed.concat(transformArticle(story));
     }, []);
+
+    return next(newFeed);
 };
