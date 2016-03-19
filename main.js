@@ -66,6 +66,19 @@ var http = require('http');
  * expected schema.
  */
 
+function transformArticle (article) {
+  return {
+    url: 'http://' + 'www.cnn.com' + article.cardContents.url, // String
+    // headline = cardContents.headlinePlainText // headlineText diff how ?
+    headline: article.cardContents.headlinePlainText, // String
+    // TODO guard against:
+      // no media
+      // non-image (eg, gallery, video)
+    imageUrl: article.cardContents.media.elementContents.cuts.full16x9, // String
+    byLine: article.cardContents.auxiliaryText // String
+  };
+}
+
 http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json', function (res) {
   var body = '';
 
@@ -74,8 +87,14 @@ http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json',
   });
 
   res.on('end', function () {
-    var cnnRes = JSON.parse(body);
-    console.log(cnnRes);
+    // TODO Find correct container dynamically
+    var topStoriesContainer = JSON.parse(body).zoneContents[1];
+
+    var newFeed = topStoriesContainer.containerContents.reduce(function (newFeed, article) {
+      return newFeed.concat(transformArticle(article));
+    }, []);
+
+    console.log(JSON.stringify(newFeed));
   });
 }).on('error', function (e) {
   console.error('Error fetching data from CNN:', e);
