@@ -65,12 +65,12 @@
 */
  
 // TODO ? use path ?
-let getCnnFeed = require('./scripts/get_cnn_feed'),
-    getTopStories = require('./scripts/get_top_stories'),
+let getTopStories = require('./scripts/get_top_stories'),
+    pullCnnFeed = require('./scripts/pull_cnn_feed'),
     transformTopStories = require('./scripts/transform_top_stories');
 
 
-getCnnFeed(function (cnnFeed) {
+pullCnnFeed(function (cnnFeed) {
     getTopStories(cnnFeed, function (topStories) {
         transformTopStories(topStories, function (newFeed) {
             console.log(newFeed);
