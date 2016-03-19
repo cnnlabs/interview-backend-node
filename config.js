@@ -2,6 +2,7 @@ module.exports = {
     CONTAINERS_LOCATION: 'zoneContents',
 
     IMG_DOMAIN: 'www.cnn.com',
+    // NOTE: mini1x1 is a special cut that is not always in the same aspect ratio
     IMG_SIZES: ['full16x9', 'large', 'medium', 'small', 'xsmall', 'mini', 'mini1x1'],
     IMG_URL_PROTOCOL: 'http://',
 

@@ -37,7 +37,6 @@ function genUrl(article) {
     }
 }
 function getHighestQualityCutUri(cuts) {
-    // NOTE: mini1x1 is a special cut that is not always in the same aspect ratio
     let highestQualityCut = '';
 
     highestQualityCut = config.IMG_SIZES.find(function (size) {
