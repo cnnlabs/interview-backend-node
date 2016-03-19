@@ -1,5 +1,5 @@
 // TODO doc
-var DOMAIN = 'www.cnn.com',
+const DOMAIN = 'www.cnn.com',
     URL_PROTOCOL = 'http://';
 
 function genByLine(article) {
