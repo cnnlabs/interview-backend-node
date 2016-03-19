@@ -4,7 +4,7 @@
   "description": "Interview - Backend Node",
   "scripts": {
     "start": "node main.js",
-    "test": "eslint **/*.js *.js"
+    "test": "eslint **/*.js *.js; mocha test/test.js"
   },
   "engines": {
     "node": "5.8.0"
@@ -12,5 +12,8 @@
   "dependencies": {
     "eslint": "^2.4.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
 }
