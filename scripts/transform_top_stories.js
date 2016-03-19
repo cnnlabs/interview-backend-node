@@ -1,6 +1,16 @@
 'use strict';
 
-// TODO doc
+/*
+* ### Other information:
+*
+* - If media content type is not image (eg, gallery or video),
+*   then set imageUrl to an empty string.
+*
+* ### Assumptions:
+*
+* - headlinePlainText is the text needed for story headlines.
+*/
+
 const DOMAIN = 'www.cnn.com',
     URL_PROTOCOL = 'http://';
 
@@ -8,15 +18,12 @@ function genByLine(article) {
     return article.cardContents.auxiliaryText || ''; // String
 }
 function genHeadline(article) {
-  // TODO investigate:
-  //   // headline = cardContents.headlinePlainText // headlineText diff how ?
     return article.cardContents.headlinePlainText || ''; // String
 }
 function genImageUrl(article) {
     if (!article.cardContents.media) {
         return '';
     }
-    // TODO ? change what happens if non-image (eg, gallery, video)
     if (article.cardContents.media.contentType !== 'image') {
         return '';
     }
@@ -45,9 +52,8 @@ function getHighestQualityCutUri(cuts) {
     return cuts[highestQualityCut].uri;
 }
 function transformArticle(article) {
-    // TODO ? throw error if article.cardContents not found
     if (!article.cardContents) {
-        return 'Article\'s cardContents not found.';
+        throw new Error('Article\'s cardContents not found.');
     }
 
     return {
@@ -60,7 +66,7 @@ function transformArticle(article) {
 
 
 module.exports = function (topStories, next) {
-    var newFeed = topStories.reduce(function (newFeed, story) {
+    let newFeed = topStories.reduce(function (newFeed, story) {
         return newFeed.concat(transformArticle(story));
     }, []);
 

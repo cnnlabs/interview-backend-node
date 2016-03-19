@@ -63,7 +63,7 @@
 * Write a unit test to validate that the JSON ouput is valid and matches the
 * expected schema.
 */
- 
+
 // TODO ? use path ?
 let getTopStories = require('./scripts/get_top_stories'),
     pullCnnFeed = require('./scripts/pull_cnn_feed'),
