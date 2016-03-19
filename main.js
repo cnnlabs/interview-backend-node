@@ -80,7 +80,18 @@ function findTopStoriesContainer(zoneContents) {
         return content.type === TOP_STORIES_TYPE && content.title === TOP_STORIES_TITLE;
     });
 }
-function genNewFeed(next) {
+function genNewFeed(cnnFeed, next) {
+    let newFeed = [],
+        topStoriesContainer = findTopStoriesContainer(cnnFeed[CONTAINERS_LOCATION]);
+    // TODO ? throw err if top stories container or .containerContents not found
+    if (!topStoriesContainer.containerContents) {
+        return next(newFeed);
+    }
+    newFeed = transformTopStories(topStoriesContainer);
+
+    return next(newFeed);
+}
+function getCnnFeed(next) {
     http.get(SOURCE_FEED_URL, function (res) {
         let body = '';
 
@@ -89,18 +100,8 @@ function genNewFeed(next) {
         });
 
         res.on('end', function () {
-            let newFeed = [],
-                topStoriesContainer = { },
-                zoneContents = JSON.parse(body)[CONTAINERS_LOCATION];
-
-            topStoriesContainer = findTopStoriesContainer(zoneContents);
-            // TODO ? throw err if top stories container or .containerContents not found
-            if (!topStoriesContainer.containerContents) {
-                return next(newFeed);
-            }
-            newFeed = transformTopStories(topStoriesContainer);
-
-            return next(newFeed);
+            let cnnFeed = JSON.parse(body);
+            return next(cnnFeed);
         });
     }).on('error', function (e) {
         console.error('Error fetching data from CNN:', e);
@@ -108,4 +109,6 @@ function genNewFeed(next) {
 }
 
 
-genNewFeed(console.log);
+getCnnFeed(function (cnnFeed) {
+    genNewFeed(cnnFeed, console.log);
+});
