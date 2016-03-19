@@ -64,5 +64,5 @@ module.exports = function (topStories, next) {
         return newFeed.concat(transformArticle(story));
     }, []);
 
-    return next(newFeed);
+    next(newFeed);
 };

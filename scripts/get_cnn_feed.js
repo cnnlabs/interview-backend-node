@@ -16,7 +16,7 @@ module.exports = function (next) {
 
         res.on('end', function () {
             let cnnFeed = JSON.parse(body);
-            return next(cnnFeed);
+            next(cnnFeed);
         });
     }).on('error', function (e) {
         console.error('Error fetching data from CNN:', e);

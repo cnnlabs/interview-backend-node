@@ -15,5 +15,5 @@ function findTopStoriesContainer(cnnFeed) {
 module.exports = function (cnnFeed, next) {
     let topStoriesContainer = findTopStoriesContainer(cnnFeed);
 
-    return next(topStoriesContainer[TOP_STORIES_KEY]);
+    next(topStoriesContainer[TOP_STORIES_KEY]);
 };
