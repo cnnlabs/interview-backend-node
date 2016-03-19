@@ -4,7 +4,7 @@
   "description": "Interview - Backend Node",
   "scripts": {
     "start": "node main.js",
-    "test": "eslint **/*.js"
+    "test": "eslint **/*.js *.js"
   },
   "engines": {
     "node": "5.8.0"
