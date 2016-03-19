@@ -63,32 +63,11 @@
 * Write a unit test to validate that the JSON ouput is valid and matches the
 * expected schema.
 */
-
-let http = require('http'),
-
+ 
 // TODO ? use path ?
+let getCnnFeed = require('./scripts/get_cnn_feed'),
     getTopStories = require('./scripts/get_top_stories'),
     transformTopStories = require('./scripts/transform_top_stories');
-
-const SOURCE_FEED_URL = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
-
-
-function getCnnFeed(next) {
-    http.get(SOURCE_FEED_URL, function (res) {
-        let body = '';
-
-        res.on('data', function (chunk) {
-            body += chunk;
-        });
-
-        res.on('end', function () {
-            let cnnFeed = JSON.parse(body);
-            return next(cnnFeed);
-        });
-    }).on('error', function (e) {
-        console.error('Error fetching data from CNN:', e);
-    });
-}
 
 
 getCnnFeed(function (cnnFeed) {
