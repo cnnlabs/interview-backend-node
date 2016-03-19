@@ -44,9 +44,7 @@ function getHighestQualityCutUri(cuts) {
 
     return cuts[highestQualityCut].uri;
 }
-
-
-module.exports = function (article) {
+function transformArticle(article) {
     // TODO ? throw error if article.cardContents not found
     if (!article.cardContents) {
         return 'Article\'s cardContents not found.';
@@ -58,4 +56,11 @@ module.exports = function (article) {
         imageUrl: genImageUrl(article), // String
         byLine: genByLine(article) // String
     };
+}
+
+
+module.exports = function (topStoriesContainer) {
+    return topStoriesContainer.containerContents.reduce(function (newFeed, story) {
+        return newFeed.concat(transformArticle(story));
+    }, []);
 };
