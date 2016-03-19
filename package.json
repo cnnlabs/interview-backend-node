@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Interview - Backend Node",
   "scripts": {
+    "start": "node main.js",
     "test": "eslint **/*.js"
   },
   "engines": {

@@ -1,5 +1,7 @@
 'use strict';
 
+var http = require('http');
+
 /*
  * ## Task 1 (of 2)
  *
@@ -63,3 +65,18 @@
  * Write a unit test to validate that the JSON ouput is valid and matches the
  * expected schema.
  */
+
+http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json', function (res) {
+  var body = '';
+
+  res.on('data', function (chunk) {
+    body += chunk;
+  });
+
+  res.on('end', function () {
+    var cnnRes = JSON.parse(body);
+    console.log(cnnRes);
+  });
+}).on('error', function (e) {
+  console.error('Error fetching data from CNN:', e);
+});
