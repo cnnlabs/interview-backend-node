@@ -69,9 +69,11 @@ var http = require('http');
 // TODO ? use path ?
 var transformArticle = require('./scripts/transform_article');
 
+var SOURCE_FEED_URL = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
+
 
 function genNewFeed (next) {
-  http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json', function (res) {
+  http.get(SOURCE_FEED_URL, function (res) {
     var body = '';
 
     res.on('data', function (chunk) {
