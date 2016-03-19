@@ -1,7 +1,5 @@
 'use strict';
 
-var http = require('http');
-
 /*
  * ## Task 1 (of 2)
  *
@@ -66,36 +64,35 @@ var http = require('http');
  * expected schema.
  */
 
-function transformArticle (article) {
-  return {
-    url: 'http://' + 'www.cnn.com' + article.cardContents.url, // String
-    // headline = cardContents.headlinePlainText // headlineText diff how ?
-    headline: article.cardContents.headlinePlainText, // String
-    // TODO guard against:
-      // no media
-      // non-image (eg, gallery, video)
-    imageUrl: article.cardContents.media.elementContents.cuts.full16x9, // String
-    byLine: article.cardContents.auxiliaryText // String
-  };
+var http = require('http');
+
+// TODO ? use path ?
+var transformArticle = require('./scripts/transform_article');
+
+
+function genNewFeed (next) {
+  http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json', function (res) {
+    var body = '';
+
+    res.on('data', function (chunk) {
+      body += chunk;
+    });
+
+    res.on('end', function () {
+      // TODO Find correct container dynamically
+      var topStoriesContainer = JSON.parse(body).zoneContents[1];
+      // TODO ? throw err if .containerContents not found
+      if (!topStoriesContainer.containerContents) return next([]);
+      var newFeed = topStoriesContainer.containerContents.reduce(function (newFeed, article) {
+        return newFeed.concat(transformArticle(article));
+      }, []);
+
+      return next(newFeed);
+    });
+  }).on('error', function (e) {
+    console.error('Error fetching data from CNN:', e);
+  });
 }
 
-http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json', function (res) {
-  var body = '';
 
-  res.on('data', function (chunk) {
-    body += chunk;
-  });
-
-  res.on('end', function () {
-    // TODO Find correct container dynamically
-    var topStoriesContainer = JSON.parse(body).zoneContents[1];
-
-    var newFeed = topStoriesContainer.containerContents.reduce(function (newFeed, article) {
-      return newFeed.concat(transformArticle(article));
-    }, []);
-
-    console.log(JSON.stringify(newFeed));
-  });
-}).on('error', function (e) {
-  console.error('Error fetching data from CNN:', e);
-});
+genNewFeed(console.log);
