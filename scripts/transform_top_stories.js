@@ -1,18 +1,17 @@
 'use strict';
 
 /*
+* ### Assumptions:
+*
+* - headlinePlainText is the text needed for story headlines.
+*
 * ### Other information:
 *
 * - If media content type is not image (eg, gallery or video),
 *   then set imageUrl to an empty string.
-*
-* ### Assumptions:
-*
-* - headlinePlainText is the text needed for story headlines.
 */
 
-const DOMAIN = 'www.cnn.com',
-    URL_PROTOCOL = 'http://';
+let config = require('../config');
 
 function genByLine(article) {
     return article.cardContents.auxiliaryText || ''; // String
@@ -34,15 +33,14 @@ function genUrl(article) {
     if (article.contentType === 'hyperlink') {
         return article.cardContents.url; // String
     } else {
-        return `${URL_PROTOCOL + DOMAIN + article.cardContents.url}`; // String
+        return `${config.IMG_URL_PROTOCOL + config.IMG_DOMAIN + article.cardContents.url}`; // String
     }
 }
 function getHighestQualityCutUri(cuts) {
     // NOTE: mini1x1 is a special cut that is not always in the same aspect ratio
-    let sizes = ['full16x9', 'large', 'medium', 'small', 'xsmall', 'mini', 'mini1x1'],
-        highestQualityCut = '';
+    let highestQualityCut = '';
 
-    highestQualityCut = sizes.find(function (size) {
+    highestQualityCut = config.IMG_SIZES.find(function (size) {
         return cuts[size] && cuts[size].uri;
     });
     if (!highestQualityCut) {

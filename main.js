@@ -64,7 +64,6 @@
 * expected schema.
 */
 
-// TODO ? use path ?
 let getTopStories = require('./scripts/get_top_stories'),
     pullCnnFeed = require('./scripts/pull_cnn_feed'),
     transformTopStories = require('./scripts/transform_top_stories');

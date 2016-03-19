@@ -1,13 +1,12 @@
 'use strict';
 
-let http = require('http');
+let http = require('http'),
 
-
-const SOURCE_FEED_URL = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
+    config = require('../config');
 
 
 module.exports = function (next) {
-    http.get(SOURCE_FEED_URL, function (res) {
+    http.get(config.SOURCE_FEED_URL, function (res) {
         let body = '';
 
         res.on('data', function (chunk) {

@@ -1,13 +1,11 @@
 'use strict';
 
-const CONTAINERS_LOCATION = 'zoneContents',
-    TOP_STORIES_KEY = 'containerContents',
-    TOP_STORIES_TITLE = 'Top stories',
-    TOP_STORIES_TYPE = 'container';
+let config = require('../config');
 
 function findTopStoriesContainer(cnnFeed) {
-    return cnnFeed[CONTAINERS_LOCATION].find(function (content) {
-        return content.type === TOP_STORIES_TYPE && content.title === TOP_STORIES_TITLE;
+    return cnnFeed[config.CONTAINERS_LOCATION].find(function (content) {
+        return content.type === config.TOP_STORIES_TYPE &&
+            content.title === config.TOP_STORIES_TITLE;
     });
 }
 
@@ -15,5 +13,5 @@ function findTopStoriesContainer(cnnFeed) {
 module.exports = function (cnnFeed, next) {
     let topStoriesContainer = findTopStoriesContainer(cnnFeed);
 
-    next(topStoriesContainer[TOP_STORIES_KEY]);
+    next(topStoriesContainer[config.TOP_STORIES_KEY]);
 };
