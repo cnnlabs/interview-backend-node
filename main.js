@@ -72,7 +72,7 @@ function genNewFeed(next) {
     pullCnnFeed(function (cnnFeed) {
         getTopStories(cnnFeed, function (topStories) {
             transformTopStories(topStories, function (newFeed) {
-                next(newFeed);
+                next(JSON.stringify(newFeed));
             });
         });
     });
