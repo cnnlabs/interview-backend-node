@@ -68,11 +68,17 @@ let getTopStories = require('./scripts/get_top_stories'),
     pullCnnFeed = require('./scripts/pull_cnn_feed'),
     transformTopStories = require('./scripts/transform_top_stories');
 
-
-pullCnnFeed(function (cnnFeed) {
-    getTopStories(cnnFeed, function (topStories) {
-        transformTopStories(topStories, function (newFeed) {
-            console.log(newFeed);
+function genNewFeed(next) {
+    pullCnnFeed(function (cnnFeed) {
+        getTopStories(cnnFeed, function (topStories) {
+            transformTopStories(topStories, function (newFeed) {
+                next(newFeed);
+            });
         });
     });
-});
+}
+
+
+genNewFeed(console.log);
+
+module.exports = genNewFeed;
