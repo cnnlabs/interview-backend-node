@@ -1,7 +1,17 @@
 'use strict';
 
 /*
-* # Business Requirement
+* This script pulls a CNN feed,
+* from which the script extracts top stories,
+* then transforms the stories into a new feed per business requirements below.
+*
+* Config: Done indirectly in dependent modules.
+* Input: N/A.
+* Output: Logs out transformed new feed and exports function which generates new feed.
+*/
+
+/*
+* # Business Requirements
 *
 * ## Task 1 (of 2)
 *
