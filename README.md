@@ -8,6 +8,8 @@ In sum, the script in `main.js` pulls a CNN feed,
 from which the script gets and transforms the top stories,
 then logs the transformed top stories to console.
 
+NOTE: There is a "Promisify" git branch that promisifies the modules and main script.
+
 ## Table of Contents
 
 1. [Installation](#installation)
