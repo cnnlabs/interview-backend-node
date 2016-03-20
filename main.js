@@ -1,6 +1,8 @@
 'use strict';
 
 /*
+* # Business Requirement
+*
 * ## Task 1 (of 2)
 *
 * Create a script starting in this file, but not limited to, that will pull
@@ -64,8 +66,11 @@
 * expected schema.
 */
 
+// Extracts the top stories from the CNN feed:
 let getTopStories = require('./scripts/get_top_stories'),
+    // Uses the http module to pull CNN feed:
     pullCnnFeed = require('./scripts/pull_cnn_feed'),
+    // Transforms the top stories to the desired new feed's schema:
     transformTopStories = require('./scripts/transform_top_stories');
 
 function genNewFeed(next) {
