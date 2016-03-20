@@ -3,16 +3,18 @@
 /*
 * Extracts the top stories from the CNN feed.
 *
-* Config: `config.js`:
+* Config: From `config.js`:
 *
-* - points to CNN feed property that is an array containing the top stories container,
+* - config.CONTAINERS_LOCATION points to CNN feed property that is an array containing the top stories container.
 *
-* - defines the .type value of the object containing the top stories,
+* - config.TOP_STORIES_KEY defines the property in the top stories container that is an array of the actual top stories.
 *
-* - defines the .title value of the object containing the top stories.
+* - config.TOP_STORIES_TYPE defines the .type value of the object containing the top stories.
+*
+* - config.TOP_STORIES_TITLE defines the .title value of the object containing the top stories.
 *
 * Input: JSON object of CNN feed.
-* Output: Exports a function that provides the container containing top stories.
+* Output: Exports a function that provides JSON object of the top stories.
 */
 
 let config = require('../config');

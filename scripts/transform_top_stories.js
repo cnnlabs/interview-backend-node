@@ -1,6 +1,19 @@
 'use strict';
 
 /*
+* Transforms the CNN feed's top stories to the desired new feed's schema.
+*
+* Config: From `config.js`:
+*
+* - config.IMG_URL_PROTOCOL is the default URL protocol for the new imageUrl property.
+*
+* - config.IMG_DOMAIN is the default URL domain for the new imageUrl property.
+*
+* - config.IMG_SIZES is an array of known possible image sizes from highest to lowest quality.
+*
+* Input: JSON object of CNN feed's top stories.
+* Output: Exports a function that provides the new feed.
+*
 * ### Assumptions:
 *
 * - headlinePlainText is the text needed for story headlines.
