@@ -2,10 +2,18 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+    "start": "node main.js",
+    "test": "eslint **/*.js *.js; mocha test/test.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "eslint": "^2.4.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
 }
