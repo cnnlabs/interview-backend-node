@@ -1,5 +1,13 @@
 'use strict';
 
+/*
+* Uses the http module to pull CNN feed pointed to by config.js
+*
+* Config: `config.js` points to URL of CNN feed.
+* Input: N/A
+* Output: Exports a function that provides JSON object of CNN feed.
+*/
+
 let http = require('http'),
 
     config = require('../config');
