@@ -39,7 +39,7 @@ function genUrl(article) {
 function getHighestQualityCutUri(cuts) {
     let highestQualityCut = '';
 
-    highestQualityCut = config.IMG_SIZES.find(function (size) {
+    highestQualityCut = config.IMG_SIZES.find((size) => {
         return cuts[size] && cuts[size].uri;
     });
     if (!highestQualityCut) {
@@ -62,8 +62,8 @@ function transformArticle(article) {
 }
 
 
-module.exports = function (topStories, next) {
-    let newFeed = topStories.reduce(function (newFeed, story) {
+module.exports = (topStories, next) => {
+    let newFeed = topStories.reduce((newFeed, story) => {
         return newFeed.concat(transformArticle(story));
     }, []);
 

@@ -69,9 +69,9 @@ let getTopStories = require('./scripts/get_top_stories'),
     transformTopStories = require('./scripts/transform_top_stories');
 
 function genNewFeed(next) {
-    pullCnnFeed(function (cnnFeed) {
-        getTopStories(cnnFeed, function (topStories) {
-            transformTopStories(topStories, function (newFeed) {
+    pullCnnFeed((cnnFeed) => {
+        getTopStories(cnnFeed, (topStories) => {
+            transformTopStories(topStories, (newFeed) => {
                 next(JSON.stringify(newFeed));
             });
         });

@@ -5,19 +5,19 @@ let http = require('http'),
     config = require('../config');
 
 
-module.exports = function (next) {
-    http.get(config.SOURCE_FEED_URL, function (res) {
+module.exports = (next) => {
+    http.get(config.SOURCE_FEED_URL, (res) => {
         let body = '';
 
-        res.on('data', function (chunk) {
+        res.on('data', (chunk) => {
             body += chunk;
         });
 
-        res.on('end', function () {
+        res.on('end', () => {
             let cnnFeed = JSON.parse(body);
             next(cnnFeed);
         });
-    }).on('error', function (e) {
+    }).on('error', (e) => {
         console.error('Error fetching data from CNN:', e);
     });
 };
