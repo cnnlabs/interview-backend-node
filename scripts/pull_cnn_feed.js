@@ -18,6 +18,6 @@ module.exports = (next) => {
             next(cnnFeed);
         });
     }).on('error', (e) => {
-        console.error('Error fetching data from CNN:', e);
+        throw new Error(e);
     });
 };
