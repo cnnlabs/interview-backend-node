@@ -3,14 +3,6 @@
 /*
 * Transforms the CNN feed's top stories to the desired new feed's schema.
 *
-* Config: From `config.js`:
-*
-* - config.IMG_URL_PROTOCOL is the default URL protocol for the new imageUrl property.
-*
-* - config.IMG_DOMAIN is the default URL domain for the new imageUrl property.
-*
-* - config.IMG_SIZES is an array of known possible image sizes from highest to lowest quality.
-*
 * Input: JSON object of CNN feed's top stories.
 * Output: Exports a function that provides the new feed.
 *
@@ -24,7 +16,13 @@
 *   then set imageUrl to an empty string.
 */
 
-let config = require('../config');
+    // the default URL domain for the new imageUrl property:
+let IMG_DOMAIN = 'www.cnn.com',
+    // An array of known possible image sizes from highest to lowest quality:
+    // NOTE: mini1x1 is a special cut that is not always in the same aspect ratio
+    IMG_SIZES = ['full16x9', 'large', 'medium', 'small', 'xsmall', 'mini', 'mini1x1'],
+    // the default URL protocol for the new imageUrl property:
+    IMG_URL_PROTOCOL = 'http://';
 
 function genByLine(article) {
     return article.cardContents.auxiliaryText || ''; // String
@@ -46,13 +44,13 @@ function genUrl(article) {
     if (article.contentType === 'hyperlink') {
         return article.cardContents.url; // String
     } else {
-        return `${config.IMG_URL_PROTOCOL + config.IMG_DOMAIN + article.cardContents.url}`; // String
+        return `${IMG_URL_PROTOCOL + IMG_DOMAIN + article.cardContents.url}`; // String
     }
 }
 function getHighestQualityCutUri(cuts) {
     let highestQualityCut = '';
 
-    highestQualityCut = config.IMG_SIZES.find((size) => {
+    highestQualityCut = IMG_SIZES.find((size) => {
         return cuts[size] && cuts[size].uri;
     });
     if (!highestQualityCut) {

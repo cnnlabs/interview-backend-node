@@ -41,6 +41,4 @@ then logs the transformed top stories to console.
 
 > - and transforms the top stories.
 
-- `config.js` is a key-value hash of constants used in pulling, reading, and transforming the CNN feed.
-
 - `test/test.js` is a test suite run on the `npm test` command.

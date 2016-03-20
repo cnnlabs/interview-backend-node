@@ -3,21 +3,18 @@
 /*
 * Uses the http module to pull CNN feed pointed to by config.js
 *
-* Config: From `config.js`:
-*
-* - config.SOURCE_FEED_URL defines URL of CNN feed.
-*
 * Input: N/A
 * Output: Exports a function that provides JSON object of CNN feed.
 */
 
 let http = require('http'),
 
-    config = require('../config');
+    // defines URL of CNN feed:
+    SOURCE_FEED_URL = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
 
 
 module.exports = (next) => {
-    http.get(config.SOURCE_FEED_URL, (res) => {
+    http.get(SOURCE_FEED_URL, (res) => {
         let body = '';
 
         res.on('data', (chunk) => {
