@@ -1,6 +1,15 @@
 # Interview - Backend Node
 
 ## Core Files
+   main.js - defines zones and creates a zone processor for ech zone
+             listens for errors from the zone parsers
+
+   lib/zoneEmitter.js - basic emitter class for convenience
+   lib/zoneParser.js  - handles the nitty gritty of parsing the feed data
+   lib/zoneProcessor  - downloads the content, runs the parser, returns transformed data
+   lib/zoneUtils      - methods to help the parser
+
+## Basic Operation
 ```js
   Basic Operation:
    define zones - this is hardcoded into main. In the real world these could be stored in a separate file or loaded
