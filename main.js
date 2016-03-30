@@ -65,7 +65,7 @@
  */
 
 var http = require('http');
-var Validator = require('jsonschema').Validator;
+var Validator = require('jsonschema').Validator; //Using jsonschema for validating JSON schema
   
 var v = new Validator();
 var instance = 4;
@@ -76,7 +76,7 @@ var schema = {
 	"byLine": "string"			
 };
 
-
+//retuired json object
  function Articles(url, headline, imageUrl, byLine)
  {
  	this.url = url;
@@ -85,7 +85,7 @@ var schema = {
  	this.byLine = byLine;
  }
 
-var options = {
+var options = { //options for http request
   host: 'www.cnn.com',
   path: '/data/ocs/section/index.html:homepage1-zone-1.json',
   method: 'GET'
@@ -101,13 +101,13 @@ http.request(options, function(res) {
     body = body + chunk;  
   });
 
-  res.on('end', function(){
+  res.on('end', function()
+  {
         var jsonData = JSON.parse(body);
         var zoneContentsCount = jsonData.zoneContents.length;
 
         for(var j = 0;j < zoneContentsCount; j++)
         {
-
         	if(jsonData.zoneContents[j].title == "Top stories") //check if the zonecontent's is of type top stories
         	{
 		        var numberOfArticles = jsonData.zoneContents[j].containerContents.length;
@@ -130,7 +130,7 @@ http.request(options, function(res) {
 		        unitTest(articles); //run test cases for json schema
 
 	    	}
-	    	else;
+	    	else; //ignore if container not top stories
     	}
   });
 
