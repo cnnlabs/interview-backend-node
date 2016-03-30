@@ -63,3 +63,67 @@
  * Write a unit test to validate that the JSON ouput is valid and matches the
  * expected schema.
  */
+
+var http = require('http');
+
+ function Articles(url, headline, imageUrl, byLine)
+ {
+ 	this.url = url;
+ 	this.headline = headline;
+ 	this.imageUrl = imageUrl;
+ 	this.byLine = byLine;
+ }
+
+var options = {
+  host: 'www.cnn.com',//'localhost',
+  //port: 8000,
+  path: '/data/ocs/section/index.html:homepage1-zone-1.json',
+  method: 'GET'
+};
+
+http.request(options, function(res) {
+  //console.log('STATUS: ' + res.statusCode);
+  //console.log('HEADERS: ' + JSON.stringify(res.headers));
+  res.setEncoding('utf8');
+  var count = 1;
+
+  var body = '';
+  var jsonData;
+  var articles = [];
+
+  res.on('data', function (chunk) {
+    //console.log('BODY: ' + chunk);
+    //console.log(res)
+    body = body + chunk;  
+  });
+
+  res.on('end', function(){
+        var jsonData = JSON.parse(body);
+        var zoneContentsCount = jsonData.zoneContents.length;
+
+        for(var j = 0;j < zoneContentsCount; j++)
+        {
+
+        	if(jsonData.zoneContents[j].title == "Top stories")
+        	{
+		        var numberOfArticles = jsonData.zoneContents[j].containerContents.length;
+		        var container = jsonData.zoneContents[j].containerContents;
+
+		        for(var i = 0; i < numberOfArticles; i++)
+		        {
+		        	articles.push(new Articles('www.cnn.com'+container[i].cardContents.url, 
+		        							   container[i].cardContents.headlinePlainText, 
+		        							   container[i].cardContents.media.elementContents.cuts.full16x9.uri, 
+		        							   container[i].cardContents.auxiliaryText)
+		        	);
+		        }
+		        //console.log(JSON.stringify(articles))
+		        console.log((articles));
+	    	}
+	    	else;
+    	}
+  });
+
+
+
+}).end();
