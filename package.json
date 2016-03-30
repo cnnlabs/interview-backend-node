@@ -2,10 +2,24 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "author": "Mark Cantrell",
+  "license": "Artistic-2.0",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/maeuca/minnow.git"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "test" : "eslint ./"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "request": "2.29.0",
+    "schema-definition": "1.0.0",
+    "winston": "2.2.0 "
+  },
+  "devDependencies": {}
 }
