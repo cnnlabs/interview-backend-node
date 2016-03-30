@@ -26,6 +26,9 @@ let parser = new zoneParser( zoneEmitter ),
 zoneEmitter.on('Error', function (message) {
     log.info(`zone parsing Error ${message}`);
 });
+// eventually this will need to be done in
+// synchronous nature or node will hit
+// an upper memory limit
 
 function start() {
     for (let zone in zones) {
