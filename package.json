@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "description": "Interview - Backend Node",
   "scripts": {
-  		"start": "node main.js",
-  		"test": "eslint *.js"
-  	},
+    "start": "node main.js",
+    "test": "eslint *.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
   "dependencies": {
-    "eslint": "^2.5.3"
+    "eslint": "^2.5.3",
+    "jsonschema": "^1.1.0"
   },
   "devDependencies": {},
   "main": "main.js",

@@ -65,6 +65,17 @@
  */
 
 var http = require('http');
+var Validator = require('jsonschema').Validator;
+  
+var v = new Validator();
+var instance = 4;
+var schema = {
+	"url": "string",
+	"headline": "string",
+	"imageUrl": "string",
+	"byLine": "string"			
+};
+
 
  function Articles(url, headline, imageUrl, byLine)
  {
@@ -75,25 +86,18 @@ var http = require('http');
  }
 
 var options = {
-  host: 'www.cnn.com',//'localhost',
-  //port: 8000,
+  host: 'www.cnn.com',
   path: '/data/ocs/section/index.html:homepage1-zone-1.json',
   method: 'GET'
 };
 
 http.request(options, function(res) {
-  //console.log('STATUS: ' + res.statusCode);
-  //console.log('HEADERS: ' + JSON.stringify(res.headers));
   res.setEncoding('utf8');
-  var count = 1;
-
   var body = '';
   var jsonData;
   var articles = [];
 
   res.on('data', function (chunk) {
-    //console.log('BODY: ' + chunk);
-    //console.log(res)
     body = body + chunk;  
   });
 
@@ -104,26 +108,44 @@ http.request(options, function(res) {
         for(var j = 0;j < zoneContentsCount; j++)
         {
 
-        	if(jsonData.zoneContents[j].title == "Top stories")
+        	if(jsonData.zoneContents[j].title == "Top stories") //check if the zonecontent's is of type top stories
         	{
 		        var numberOfArticles = jsonData.zoneContents[j].containerContents.length;
 		        var container = jsonData.zoneContents[j].containerContents;
 
 		        for(var i = 0; i < numberOfArticles; i++)
 		        {
+		        	var imageSrc;
+		        	if(container[i].cardContents.media.contentType == "image") //if images are absent, make url empty
+		        		imageSrc = container[i].cardContents.media.elementContents.cuts.full16x9.uri;
+		        	else imageSrc = "";
+
 		        	articles.push(new Articles('www.cnn.com'+container[i].cardContents.url, 
 		        							   container[i].cardContents.headlinePlainText, 
-		        							   container[i].cardContents.media.elementContents.cuts.full16x9.uri, 
+		        							   imageSrc, 
 		        							   container[i].cardContents.auxiliaryText)
 		        	);
 		        }
-		        //console.log(JSON.stringify(articles))
-		        console.log((articles));
+		        console.log(JSON.stringify(articles)); //convert to strings
+		        unitTest(articles); //run test cases for json schema
+
 	    	}
 	    	else;
     	}
   });
 
+function unitTest(jsonObj)
+{
+	console.log("-----Unit Test-----");
+	for(var i = 0; i < jsonObj.length;i++) //test the json structure for each article
+	{
+		var errorMsg;
+		if(v.validate(jsonObj[i], schema).errors=="") //if no error, print "none"
+			errorMsg = "none";
+		else errorMsg = v.validate(jsonObj[i], schema).errors;
 
+		console.log("article "+(i+1)+" errors: "+errorMsg);
+	}
+}
 
 }).end();
