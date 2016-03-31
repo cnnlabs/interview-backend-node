@@ -9,6 +9,7 @@ log.add(log.transports.File, {filename: 'zone.log'});
 
 
 let parser = new zoneParser( zoneEmitter ),
+    zonendx = 0,
     zones = [
         {
             name: 'Top stories',
@@ -26,19 +27,21 @@ let parser = new zoneParser( zoneEmitter ),
 zoneEmitter.on('Error', function (message) {
     log.info(`zone parsing Error ${message}`);
 });
-// eventually this will need to be done in
-// synchronous nature or node will hit
-// an upper memory limit
 
-function start() {
-    for (let zone in zones) {
-
-        let zonedef = zones[zone],
+function processZones(zones, callback) {
+    if ( zonendx > zones.length - 1) {
+        callback;
+    } else {
+        let zonedef = zones[zonendx],
             zoneproc = new zoneProcessor(zonedef);
-        zoneproc.process();
+        zoneproc.process( function (articles) {
+            console.log(articles);
+            zonendx++;
+            processZones(zones, callback);
+        });
     }
-
 }
 
-
-start();
+processZones(zones, function ( )  {
+    log.info(`Zone Processing Completed...${zonendx}`);
+});
