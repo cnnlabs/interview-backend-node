@@ -26,7 +26,6 @@ function logStories(stories) {
     console.log(JSON.stringify(stories));
 }
 
-
 function processTopStories(topStories) {
     var urlStub = 'www.cnn.com',
         processedTopStoryObj = {
