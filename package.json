@@ -2,10 +2,21 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+    "start": "node main.js",
+    "test": "eslint *.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "requests": "~0.1.7",
+    "jsonschema": "~1.1.0",
+    "eslint": "~2.5.3"
+  },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sadie8686/interview-backend-node.git"
+  }
 }

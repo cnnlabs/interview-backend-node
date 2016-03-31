@@ -63,3 +63,71 @@
  * Write a unit test to validate that the JSON ouput is valid and matches the
  * expected schema.
  */
+
+var request = require('request')
+    , validator = require('jsonschema')
+    , v = new validator.Validator()
+    , articleSchema =  {
+        url: 'string',
+        headline: 'string',
+        imageUrl: 'string',
+        byLine: 'string'
+    }
+    , url = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json'
+    , errorMsg = ''
+    ;
+
+function Article(url, headline, imageUrl, byLine) {
+    this.url = url;
+    this.headline = headline;
+    this.imageUrl = imageUrl;
+    this.byLine = byLine;
+}
+
+function validateArticles(articlesObj) {
+    if (articlesObj && articlesObj.length) {
+        for (let i = 0; i < articlesObj.length; i++) {
+            errorMsg = v.validate(articlesObj[i], articleSchema).errors;
+            if (errorMsg != '') {
+                console.log(`Error in article ${i + 1} errors: ${errorMsg}`);
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        let data = JSON.parse(body)
+            , articles = []
+            ;
+        if (data.zoneContents && data.zoneContents.length) {
+            for (let i = 0; i < data.zoneContents.length; i++) {
+                if (data.zoneContents[i].title == 'Top stories') {
+                    let containerContents = data.zoneContents[i].containerContents;
+                    for (let j = 0; j < data.zoneContents[i].containerContents.length; j++) {
+                        let imageSrc = '';
+
+                        if (containerContents[j].cardContents.media.contentType == 'image') {
+                            imageSrc = containerContents[j].cardContents.media.elementContents.cuts.full16x9.uri;
+                        }
+
+                        articles.push(new Article(`http://www.cnn.com${containerContents[j].cardContents.url}`,
+                            containerContents[j].cardContents.headlinePlainText,
+                            imageSrc,
+                            containerContents[j].cardContents.auxiliaryText)
+                        );
+                    }
+                    if (validateArticles(articles)) {
+                        console.log(JSON.stringify(articles));
+                    }
+                }
+            }
+        } else {
+            console.log('No articles found.');
+        }
+    } else {
+        console.log('Error in getting response ', error);
+    }
+});
