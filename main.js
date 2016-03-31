@@ -30,7 +30,7 @@ function logStories(stories) {
 function processTopStories(topStories) {
     var urlStub = 'www.cnn.com',
         processedTopStoryObj = {
-            topStories: []
+            'Top stories': []
         };
     topStories.forEach( function (currentStory) {
         var newStory = {};
@@ -38,7 +38,7 @@ function processTopStories(topStories) {
         newStory.headline = currentStory.cardContents.headlinePlainText;
         newStory.imageUrl = getStoryImage(currentStory.cardContents.media);
         newStory.url = urlStub + currentStory.cardContents.url;
-        processedTopStoryObj.topStories.push(newStory);
+        processedTopStoryObj['Top stories'].push(newStory);
     });
     return processedTopStoryObj;
 }
