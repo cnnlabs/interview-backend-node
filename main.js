@@ -34,8 +34,12 @@ function processZones(zones, callback) {
     } else {
         let zonedef = zones[zonendx],
             zoneproc = new zoneProcessor(zonedef);
-        zoneproc.process( function (articles) {
-            console.log(articles);
+        zoneproc.process( function (err, articles) {
+            if (err) {
+                log.info(`Exception processing zone endpoint ${zonedef.endpoint} ${err}`);
+            } else {
+                console.log(articles);
+            }
             zonendx++;
             processZones(zones, callback);
         });
