@@ -1,11 +1,18 @@
 {
   "name": "interview-backend-node",
-  "version": "0.1.0",
-  "description": "Interview - Backend Node",
-  "scripts": {},
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "eslint main.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "author": "Christopher Dobbins",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.69.0"
+  }
 }
