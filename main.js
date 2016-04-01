@@ -30,13 +30,14 @@ function processTopStories(topStories) {
     var urlStub = 'www.cnn.com',
         processedTopStoryObj = {
             'Top stories': []
-        };
+        },
+        urlTestString = /^https?:\/\//;
     topStories.forEach( function (currentStory) {
         var newStory = {};
         newStory.byLine = currentStory.cardContents.auxiliaryText;
         newStory.headline = currentStory.cardContents.headlinePlainText;
         newStory.imageUrl = getStoryImage(currentStory.cardContents.media);
-        newStory.url = urlStub + currentStory.cardContents.url;
+        newStory.url = urlTestString.test(currentStory.cardContents.url) ? currentStory.cardContents.url : urlStub + currentStory.cardContents.url;
         processedTopStoryObj['Top stories'].push(newStory);
     });
     return processedTopStoryObj;
