@@ -19,7 +19,7 @@ This project will translate the CNN story feed to the desired format of:
 
 - Clone Repository
 - **npm install** 
-- **npm start **
+- **npm start**
 
 ## Testing the Project
 
