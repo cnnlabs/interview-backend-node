@@ -2,10 +2,28 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+    "test": "eslint main.js",
+    "start": "node main.js"
+  },
+  "author": "Steven Bell for CNNLabs",
+  "license": "MIT",
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "eslint": "^2.7.0",
+    "express": "^4.13.4",
+    "lodash": "^4.8.2",
+    "morgan": "^1.7.0",
+    "request": "^2.70.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.7.0",
+    "eslint-config-standard": "^5.1.0",
+    "eslint-plugin-promise": "^1.1.0",
+    "eslint-plugin-standard": "^1.3.2",
+    "mocha": "^2.4.5"
+  }
 }
