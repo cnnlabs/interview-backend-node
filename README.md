@@ -1,10 +1,28 @@
-# Interview - Backend Node
+#CNN Feed Processor - Interview Submission
 
-Fork this project and submit a pull request when you are complete.
+This project will translate the CNN story feed to the desired format of: 
 
-Read the comments in [main.js](./main.js).
+```js
 
-Once the pull request has been evaluated, it will be closed and someone will be in contact with you.
+[
+ {
+    url: '...',      
+    headline: '...',
+    imageUrl: '...',
+    byLine: '...'
+ }
+]
 
-Thanks!
+```
+
+## Getting Started
+
+- Clone Repository
+- **npm install** 
+
+## Running the Project
+
+```
+npm start
+```
 

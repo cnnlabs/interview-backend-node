@@ -3,13 +3,12 @@
 var imageService = require('./image-size-service'),
     config = require('./config'),
     _ = require('underscore');
- /*
- *         {
- *             "url": String,
- *             "headline": String,
- *             "imageUrl": String,
- *             "byLine": String
- *         }
+
+/**
+ * 
+ * @param  {any} feed - parsed json object from feed service
+ * @callback  {any} success
+ * @returns {object} - Returns result of transformation 
  */
 function _transformFeed(feed, success)
 {
