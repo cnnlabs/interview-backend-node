@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Finds the Highest Quality Image based on the highest width and height
  * @param  {Object} images - An object with properties for each image size

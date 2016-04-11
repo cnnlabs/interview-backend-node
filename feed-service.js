@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('./config'),
     http = require('http');
 /**
@@ -17,7 +19,7 @@ function _loadFeed(success) {
 
         res.on('end', function() {
             var response = JSON.parse(body);
-            success(body);
+            success(response);
         });
 
     });
