@@ -2,10 +2,12 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+      "start": "node main.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {}
 }
