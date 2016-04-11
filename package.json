@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "description": "Interview - Backend Node",
   "scripts": {
-      "start": "node main.js"
+    "start": "node main.js"
   },
   "engines": {
     "node": "5.8.0"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
 }
