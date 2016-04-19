@@ -1,5 +1,22 @@
 'use strict';
 
+var request = require('request'),
+    url     = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
+
+(function getJSON() {
+
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+    var jsonObject = JSON.parse(body);
+    // console.log("containerContents = " + jsonObject.zoneContents.containerContents);
+    console.log(jsonObject);
+    }
+  })
+})();
+
+
+
+
 /*
  * ## Task 1 (of 2)
  *
