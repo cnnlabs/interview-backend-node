@@ -1,32 +1,7 @@
 'use strict';
 
-var request = require('request');
-
-getJSON();
-
-function getJSON() {
-  var feedUrl = 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json';
-  request(feedUrl, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var feed = JSON.parse(body);
-      getTopStories(feed);
-    } else {
-      throw new Error();
-    }
-  })
-};
-
-function getTopStories(feed) {
-  var topStories = [];
-  feed.zoneContents.forEach(function (zoneContent) {
-      if (zoneContent.type === 'container' && zoneContent.title === 'Top stories') {
-          topStories = zoneContent.containerContents;
-          return;
-      }
-  });
-  console.log(topStories);
-};
-
+var getFeed = require('./get-feed');
+getFeed.getFeed();
 
 /*
  * ## Task 1 (of 2)
