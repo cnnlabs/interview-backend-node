@@ -1,5 +1,8 @@
 'use strict';
 
+var getFeed = require('./get-feed');
+getFeed.getFeed();
+
 /*
  * ## Task 1 (of 2)
  *
