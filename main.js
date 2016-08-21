@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 /*
  * ## Task 1 (of 2)
@@ -69,104 +69,99 @@ var request = require('request');
 /*
  * Main function
  */
-var run = function() {
+function run() {
 
-	getTopStories(function(topStories) {
-		var stories = buildStories(topStories);
-		console.log(JSON.parse(stories));
-	})
-};
+    getTopStories(function (topStories) {
+        var stories = buildStories(topStories);
+        console.log(JSON.parse(stories));
+    });
+}
 
 /*
  * Fetches the top stories from the CNN source url.
  * Returns the array of top stories via callback
  */
-var getTopStories = function(callback) {
+function getTopStories(callback) {
 
 	// HTTP request options
-		var options = {
-		url: "http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json"
-	};
+    var options = {
+        url: 'http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json'
+    };
 
 	// Request CNN source url
-	request(options, function(error, response, body) {
+    request(options, function (error, response, body) {
 
 		// Handle response from request
-		if (!error && response.statusCode === 200) {
-			var json = JSON.parse(body);
-			var zoneContents = json["zoneContents"];
+        if (!error && response.statusCode === 200) {
+            var json = JSON.parse(body),
+                zoneContents = json['zoneContents'],
+                i, topStories;
 
 			// Loop through containers to find the one containing top stories
-			for (var i in zoneContents) {
-				if (zoneContents[i]["title"] === "Top stories") {
+            for (i in zoneContents) {
+                if (zoneContents[i]['title'] === 'Top stories') {
 
 					// Return array of top stories via callback function
-					var topStories = zoneContents[i]["containerContents"];
-					callback(topStories);
-				}
-			}
-		}
-		else {
-			console.log("ERROR: " + error);
-		}
-	});
-};
+                    topStories = zoneContents[i]['containerContents'];
+                    callback(topStories);
+                }
+            }
+        } else {
+            console.log('Error: ${error}!');
+        }
+    });
+}
 
 /*
  * Constructs new JSON string of top stories
  */
-var buildStories = function(stories) {
+function buildStories(stories) {
 
-	var topStories = [];
+    var topStories = [],
+        i, story, url, headline, imageUrl, byLine, newStory;
 
-	for (var i in stories) {
-		var story = stories[i];
-		var url = "http://www.cnn.com" + story["cardContents"]["url"];
-		var headline = story["cardContents"]["headlinePlainText"];
-		var imageUrl = getImageUrl(story);
-		var byLine = story["cardContents"]["auxiliaryText"];
+    for (i in stories) {
+        story = stories[i],
+        url = 'http://www.cnn.com${story["cardContents"]["url"]}',
+        headline = story['cardContents']['headlinePlainText'],
+        imageUrl = getImageUrl(story),
+        byLine = story['cardContents']['auxiliaryText'],
 
-		var newStory = {
-			"url": url,
-			"headline": headline,
-			"imageUrl": imageUrl,
-			"byLine": byLine
-		};
+        newStory = {
+            url: url,
+            headline: headline,
+            imageUrl: imageUrl,
+            byLine: byLine
+        };
 
-		topStories.push(newStory);
-	};
+        topStories.push(newStory);
+    }
 
-	return JSON.stringify(topStories);
-};
+    return JSON.stringify(topStories);
+}
 
 /*
  * Retrieves the largest image available for a story
  */
-var getImageUrl = function(story) {
+function getImageUrl(story) {
 
-	var cuts = story["cardContents"]["media"]["elementContents"]["cuts"];
+    var cuts = story['cardContents']['media']['elementContents']['cuts'];
 
-	if (cuts["full16x9"]) {
-		return cuts["full16x9"]["uri"];
-	}
-	else if (cuts["large"]) {
-		return cuts["large"]["uri"];
-	}
-	else if (cuts["medium"]) {
-		return cuts["medium"]["uri"];
-	}
-	else if (cuts["small"]) {
-		return cuts["small"]["uri"];
-	}
-	else if (cuts["xsmall"]) {
-		return cuts["xsmall"]["uri"];
-	}
-	else if (cuts["mini"]) {
-		return cuts["mini"]["uri"];
-	}
-	else {
-		return story["cardContents"]["media"]["elementContents"]["imageUrl"];
-	}
+    if (cuts['full16x9']) {
+        return cuts['full16x9']['uri'];
+    } else if (cuts['large']) {
+        return cuts['large']['uri'];
+    } else if (cuts['medium']) {
+        return cuts['medium']['uri'];
+    } else if (cuts['small']) {
+        return cuts['small']['uri'];
+    } else if (cuts['xsmall']) {
+        return cuts['xsmall']['uri'];
+    } else if (cuts['mini']) {
+        return cuts['mini']['uri'];
+    } else {
+        return story['cardContents']['media']['elementContents']['imageUrl'];
+    }
 }
 
 run();

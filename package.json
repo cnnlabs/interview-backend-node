@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "description": "Interview - Backend Node",
   "scripts": {
-  	"start": "node main.js"
+    "start": "node main.js",
+    "test": "eslint main.js"
   },
   "engines": {
     "node": "5.8.0"
   },
   "dependencies": {
-  	"request": "x.x.x"
+    "request": "x.x.x"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^3.3.1"
+  }
 }
