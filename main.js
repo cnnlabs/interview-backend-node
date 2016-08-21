@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 /*
  * ## Task 1 (of 2)
@@ -64,16 +64,26 @@
  * expected schema.
  */
 
+/*eslint-env es6*/
+
 var request = require('request');
 
 /*
  * Main function
  */
 function run() {
-
-    getTopStories(function (topStories) {
-        var stories = buildStories(topStories);
+    getTopStories(function (stories) {
         console.log(JSON.parse(stories));
+    });
+}
+
+/*
+ * Fetches the top stories then builds the new JSON array of top stories
+ */
+function getTopStories(callback) {
+    fetchTopStoriesFromSource(function (topStories) {
+        var stories = buildStories(topStories);
+        callback(stories);
     });
 }
 
@@ -81,7 +91,7 @@ function run() {
  * Fetches the top stories from the CNN source url.
  * Returns the array of top stories via callback
  */
-function getTopStories(callback) {
+function fetchTopStoriesFromSource(callback) {
 
 	// HTTP request options
     var options = {
@@ -107,7 +117,7 @@ function getTopStories(callback) {
                 }
             }
         } else {
-            console.log('Error: ${error}!');
+            console.log(`Error: ${error}!`);
         }
     });
 }
@@ -122,7 +132,7 @@ function buildStories(stories) {
 
     for (i in stories) {
         story = stories[i],
-        url = 'http://www.cnn.com${story["cardContents"]["url"]}',
+        url = `http://www.cnn.com${story['cardContents']['url']}`,
         headline = story['cardContents']['headlinePlainText'],
         imageUrl = getImageUrl(story),
         byLine = story['cardContents']['auxiliaryText'],
@@ -165,3 +175,7 @@ function getImageUrl(story) {
 }
 
 run();
+
+module.exports = {
+    getTopStories: getTopStories
+};

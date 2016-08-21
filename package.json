@@ -4,13 +4,15 @@
   "description": "Interview - Backend Node",
   "scripts": {
     "start": "node main.js",
-    "test": "eslint main.js"
+    "test": "eslint main.js; eslint test/test.js",
+    "unit": "node test/test.js"
   },
   "engines": {
     "node": "5.8.0"
   },
   "dependencies": {
-    "request": "x.x.x"
+    "request": "x.x.x",
+    "unit.js": "x.x.x"
   },
   "devDependencies": {
     "eslint": "^3.3.1"
