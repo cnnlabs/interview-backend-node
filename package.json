@@ -8,6 +8,8 @@
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+  	"request": "x.x.x"
+  },
   "devDependencies": {}
 }

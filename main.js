@@ -60,6 +60,113 @@
  *
  * ## Extra Credit
  *
- * Write a unit test to validate that the JSON ouput is valid and matches the
+ * Write a unit test to validate that the JSON output is valid and matches the
  * expected schema.
  */
+
+var request = require('request');
+
+/*
+ * Main function
+ */
+var run = function() {
+
+	getTopStories(function(topStories) {
+		var stories = buildStories(topStories);
+		console.log(JSON.parse(stories));
+	})
+};
+
+/*
+ * Fetches the top stories from the CNN source url.
+ * Returns the array of top stories via callback
+ */
+var getTopStories = function(callback) {
+
+	// HTTP request options
+		var options = {
+		url: "http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json"
+	};
+
+	// Request CNN source url
+	request(options, function(error, response, body) {
+
+		// Handle response from request
+		if (!error && response.statusCode === 200) {
+			var json = JSON.parse(body);
+			var zoneContents = json["zoneContents"];
+
+			// Loop through containers to find the one containing top stories
+			for (var i in zoneContents) {
+				if (zoneContents[i]["title"] === "Top stories") {
+
+					// Return array of top stories via callback function
+					var topStories = zoneContents[i]["containerContents"];
+					callback(topStories);
+				}
+			}
+		}
+		else {
+			console.log("ERROR: " + error);
+		}
+	});
+};
+
+/*
+ * Constructs new JSON string of top stories
+ */
+var buildStories = function(stories) {
+
+	var topStories = [];
+
+	for (var i in stories) {
+		var story = stories[i];
+		var url = "http://www.cnn.com" + story["cardContents"]["url"];
+		var headline = story["cardContents"]["headlinePlainText"];
+		var imageUrl = getImageUrl(story);
+		var byLine = story["cardContents"]["auxiliaryText"];
+
+		var newStory = {
+			"url": url,
+			"headline": headline,
+			"imageUrl": imageUrl,
+			"byLine": byLine
+		};
+
+		topStories.push(newStory);
+	};
+
+	return JSON.stringify(topStories);
+};
+
+/*
+ * Retrieves the largest image available for a story
+ */
+var getImageUrl = function(story) {
+
+	var cuts = story["cardContents"]["media"]["elementContents"]["cuts"];
+
+	if (cuts["full16x9"]) {
+		return cuts["full16x9"]["uri"];
+	}
+	else if (cuts["large"]) {
+		return cuts["large"]["uri"];
+	}
+	else if (cuts["medium"]) {
+		return cuts["medium"]["uri"];
+	}
+	else if (cuts["small"]) {
+		return cuts["small"]["uri"];
+	}
+	else if (cuts["xsmall"]) {
+		return cuts["xsmall"]["uri"];
+	}
+	else if (cuts["mini"]) {
+		return cuts["mini"]["uri"];
+	}
+	else {
+		return story["cardContents"]["media"]["elementContents"]["imageUrl"];
+	}
+}
+
+run();
