@@ -33,5 +33,5 @@ main.getTopStories(function (topStories) {
         console.log(`Story #${i} is valid\n`);
     }
 
-    console.log('Completed unit tests');
+    console.log('Completed unit tests\n');
 });
