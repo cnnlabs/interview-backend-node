@@ -1,10 +1,13 @@
 # Interview - Backend Node
 
-Fork this project and submit a pull request when you are complete.
+Author: Matthew Parangot
 
-Read the comments in [main.js](./main.js).
+This script fetches the top stories from CNN and outputs them in a custom JSON string.
 
-Once the pull request has been evaluated, it will be closed and someone will be in contact with you.
+Steps:
 
-Thanks!
+- Install packages: `npm install`
+- Execute script: `npm start`
+- Execute ESLint: `npm test`
+- Execute unit tests: `npm run unit`
 
