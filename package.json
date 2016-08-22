@@ -2,10 +2,19 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+    "start": "node main.js",
+    "test": "eslint main.js; eslint test/test.js",
+    "unit": "node test/test.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "request": "x.x.x",
+    "unit.js": "x.x.x"
+  },
+  "devDependencies": {
+    "eslint": "^3.3.1"
+  }
 }
