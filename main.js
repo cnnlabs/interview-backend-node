@@ -63,3 +63,162 @@
  * Write a unit test to validate that the JSON ouput is valid and matches the
  * expected schema.
  */
+
+/*Define local variables*/
+var i, c, image, zoneContents, media, headline, contentLen, byline, config,
+    request, baseSiteURL, containerContents, url, newJSON, chImg,
+    noImgText, assetURL, imgType;
+
+config = require('./config');
+request = require('request');
+baseSiteURL = config.baseSiteUrl;
+containerContents = null;
+url = config.apiBaseUrl;
+newJSON = '{ \n' +
+	'No Data Found' +
+	'}\n';
+
+function addURL(url, newJSON) {
+    var sURL;
+    if (url.substring(0, 1) == '/') {
+        sURL = `${newJSON} \t\"url\": \"${baseSiteURL}${url} \", \n`;
+    } else {
+    //Just print the url
+        sURL = `${newJSON} \t\"url\": \"${url} \", \n`;
+    }
+    return sURL;
+}
+
+function tagJSON(c, newJSON, contentLen) {
+    var tagJSON;
+    if ( c < contentLen - 1 ) {
+        tagJSON = `${newJSON} },`;
+    } else {
+        tagJSON = `${newJSON} }\n`;
+    }
+
+    return tagJSON;
+}
+
+function getAsset(image, newJSON) {
+    assetURL;
+    noImgText = '\t\"imageUrl\": \"' + 'No image defined' + '\", \n';
+    if (typeof(image) == 'undefined') {
+        //If imageURL isnt present then don't include it in the JSON
+        assetURL = newJSON + noImgText;
+    } else {
+        chImg = imgCheck(image.full16x9.uri);
+        switch (chImg) {
+            case 0:
+                assetURL = `${newJSON}\t\"imageUrl\": \"${image.full16x9.uri}\", \n`;
+                break;
+            default:
+                assetURL = newJSON + noImgText;
+        }
+
+    }
+    return assetURL;
+}
+
+function getByLine(byline, newJSON) {
+    var byText;
+    if (typeof(byline) == 'undefined') {
+    //If imageURL isnt present then don't include it in the JSON
+        byText = `${newJSON}\t\"byLine\": \"No data found\" \n`;
+    } else {
+        byText = `${newJSON}\t\"byLine\": \"${byline}\", \n`;
+    }
+    return byText;
+}
+
+function imgCheck(imageUrl) {
+    var types = ['jpg', 'png', 'gif', 'PNG', 'GIF', 'JPG'];
+    imgType = imageUrl.substring(imageUrl.length - 3, imageUrl.length);
+    if (types.some(function (value) {
+		//console.log(string.indexOf(value));
+        return imgType.indexOf(value) > -1;
+    })) {
+    //console.log('The string contains one of the content types.');
+        return 0;
+    }
+}
+
+/*Setup request and get response*/
+request({
+    url: url,
+    json: true
+}, function (error, response, body) {
+
+    if (!error && response.statusCode === 200) {
+        //console.log(body) // Print the json response
+
+        //Now Parse the body
+        //console.log(body.zoneContents);
+
+        //Make into object
+        zoneContents = body.zoneContents;
+
+        //console.log(zoneContents.length);
+
+        for (i = 0; i < zoneContents.length; i++) {
+
+        //Find the title to the first Top stories
+            if (zoneContents[i].title == 'Top stories') {
+            //console.log("Top stories Zone"+i+" :");
+            //console.log(zoneContents[i]);
+            //Set Cardcontents to array of content
+                containerContents = zoneContents[i].containerContents;
+            }
+        }
+
+        /*If contents are returned, the iterate the array of data*/
+
+        if (containerContents != null) {
+            //console.log(containerContents);
+            for ( c = 0; c < containerContents.length; c++) {
+                media = containerContents[c].cardContents.media;
+            //console.log(media);
+
+                image = media.elementContents.cuts;
+                url = containerContents[c].cardContents.url;
+                headline = containerContents[c].cardContents.headlineText;
+                contentLen = containerContents.length;
+                byline = containerContents[c].cardContents.byline;
+
+            //Begin the JSON
+                newJSON = '{ \n';
+
+            //Add the base URL if first character is a slash
+                newJSON = addURL(url, newJSON);
+
+            //Add headline
+                newJSON = `${newJSON}\t\"headline\": \"${headline}\", \n`;
+
+            //Add image
+                newJSON = getAsset(image, newJSON);
+
+            //Byline check for author
+                newJSON = getByLine(byline, newJSON);
+
+            //Add closing tag
+                newJSON = tagJSON(c, newJSON, contentLen);
+
+            //Write JSON to console
+                console.log(newJSON);
+            }
+        } else {
+            //No data found so send no data found
+            newJSON = '{ \n' +
+            'No Data Found' +
+            '}\n';
+            //Print final result to console
+            console.log(newJSON);
+
+        }
+    } else {
+    //Print the error message
+        console.log(`HTTP Response Error: ${error.message}`);
+    }
+});
+
+
