@@ -59,29 +59,28 @@ http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json',
     // Once response has ended
     response.on('end', function () {
         var data = JSON.parse(body),
-            zoneContents = data.zoneContents,
-            mainTop = zoneContents[0].containerContents[0],
-            otherTop = zoneContents[1].containerContents,
-            storiesLen = otherTop.length,
+            zContents = data.zoneContents,
             topStories = [],
-            s;
+            z,
+            c;
 
-        // Add the Main Story first
-        topStories.push(new Article(
-            mainTop.cardContents.url,
-            mainTop.cardContents.headlinePlainText,
-            mainTop.cardContents.media,
-            mainTop.cardContents.auxiliaryText
-        ));
-
-        // Then add the remaining top stories
-        for (s = 0; s < storiesLen; s++) {
-            topStories.push(new Article(
-                otherTop[s].cardContents.url,
-                otherTop[s].cardContents.headlinePlainText,
-                otherTop[s].cardContents.media,
-                otherTop[s].cardContents.auxiliaryText
-            ));
+        // Go through each Zone Contents object
+        for (z = 0; z < zContents.length; z++) {
+            // Check for Top Stories
+            if (zContents[z].title === 'Top stories') {
+                // Go through all container contents
+                for (c = 0; c < zContents[z].containerContents.length; c++) {
+                    // Check and grab articles
+                    if (zContents[z].containerContents[c].contentType === 'article' || zContents[z].containerContents[c].contentType === 'hyperlink' || zContents[z].containerContents[c].contentType === 'video') {
+                        topStories.push(new Article(
+                            zContents[z].containerContents[c].cardContents.url,
+                            zContents[z].containerContents[c].cardContents.headlinePlainText,
+                            zContents[z].containerContents[c].cardContents.media,
+                            zContents[z].containerContents[c].cardContents.auxiliaryText
+                        ));
+                    }
+                }
+            }
         }
 
         console.log(topStories);
