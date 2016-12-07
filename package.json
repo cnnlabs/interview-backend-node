@@ -2,10 +2,27 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+    "start": "node main.js",
+    "test": "eslint *.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "^2.5.3",
+    "jsonschema": "^1.1.0"
+  },
   "devDependencies": {},
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marattmohith/interview-backend-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marattmohith/interview-backend-node/issues"
+  },
+  "homepage": "https://github.com/marattmohith/interview-backend-node#readme"
 }
