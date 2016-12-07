@@ -2,10 +2,21 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+    "start": "node main.js",
+    "test": "eslint main.js ./config/config.js ./env/development.js ./config/express.js ./datafeed/data.feed.js ./datafeed/config.article.js ./datafeed/alter.article.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.13.4",
+    "superagent": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.5.3",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1"
+  }
 }
