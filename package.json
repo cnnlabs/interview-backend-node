@@ -1,11 +1,15 @@
 {
   "name": "interview-backend-node",
   "version": "0.1.0",
+  "author": "Arsen Davtyan",
   "description": "Interview - Backend Node",
-  "scripts": {},
+  "scripts": {
+      "start" : "nodejs main.js",
+      "test" : "eslint main.js"
+  },
   "engines": {
     "node": "5.8.0"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {}
 }
