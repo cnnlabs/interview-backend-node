@@ -14,7 +14,7 @@
  *     http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json
  *
  *
- * ### Output:
+ * ### Output 1:
  *
  *     A valid JSON string representing an array of articles from the
  *     "Top stories" container with the following properties for each article:
@@ -26,10 +26,14 @@
  *             "byLine": String
  *         }
  *
+ * ### Output 2:
+ *
+ *     Create a React web app that displays the array of articles from the "Top Stories"
+ *     container with headlines, bylines, and images.
  *
  * ### Other information and guidelines:
  *
- * - Use the node version specified by the engines property in package.json.
+ * - Use the most current LTS node version.
  *
  * - `url` should include the protocol and domain, which would be www.cnn.com.
  *
@@ -62,4 +66,9 @@
  *
  * Write a unit test to validate that the JSON ouput is valid and matches the
  * expected schema.
+ *
+ * ##  Extra Extra Credit
+ *
+ * Do something unique to wow us.  You have 24 hours to complete these taks - so
+ * show us what else you can do.  :)
  */
