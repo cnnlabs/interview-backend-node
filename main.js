@@ -49,10 +49,89 @@
  *   homepage.  The content to map is in a _container_ with a _title_ of
  *   "Top stories".  This content changes all the time.  The placement of
  *   this container will change as well.
- *
- *
- *
- *
+ */
+
+var http = require('http');
+
+http.get('http://www.cnn.com/data/ocs/section/index.html:homepage1-zone-1.json', function (response) {
+    var body = '';
+    // Grab data and add to body
+    response.on('data', function (d) {
+        body += d;
+    });
+
+    // Once response has ended
+    response.on('end', function () {
+        var data = JSON.parse(body),
+            zContents = data.zoneContents,
+            topStories = [],
+            z,
+            c;
+
+        // Go through each Zone Contents object
+        for (z = 0; z < zContents.length; z++) {
+            // Check for Top Stories
+            if (zContents[z].title === 'Top stories') {
+                // Go through all container contents
+                for (c = 0; c < zContents[z].containerContents.length; c++) {
+                    // Check and grab articles
+                    if (zContents[z].containerContents[c].contentType === 'article' || zContents[z].containerContents[c].contentType === 'hyperlink' || zContents[z].containerContents[c].contentType === 'video') {
+                        topStories.push(new Article(
+                            zContents[z].containerContents[c].cardContents.url,
+                            zContents[z].containerContents[c].cardContents.headlinePlainText,
+                            zContents[z].containerContents[c].cardContents.media,
+                            zContents[z].containerContents[c].cardContents.auxiliaryText
+                        ));
+                    }
+                }
+            }
+        }
+
+        console.log(topStories);
+    });
+}).on('error', (e) => {
+    console.log(`Got error: ${e.message}`);
+});
+
+// Article Constructor will handle finding the appropriate data points
+function Article(url, headline, media, byLine) {
+    if (url.startsWith('/')) {
+        this.url = `http://www.cnn.com${url}`;
+    } else {
+        this.url = url;
+    }
+
+    this.headline = headline;
+
+    if (media.contentType === 'image') {
+        var cuts = media.elementContents.cuts;
+
+        // Assuming there is always an object for each size, prioritize by image size
+        if (cuts.full16x9.uri !== '' && typeof cuts.full16x9.uri !== 'undefined') {
+            this.imageUrl = cuts.full16x9.uri;
+        } else if (cuts.large.uri !== '' && typeof cuts.large.uri !== 'undefined') {
+            this.imageUrl = cuts.large.uri;
+        } else if (cuts.medium.uri !== '' && typeof cuts.medium.uri !== 'undefined') {
+            this.imageUrl = cuts.medium.uri;
+        } else if (cuts.small.uri !== '' && typeof cuts.small.uri !== 'undefined') {
+            this.imageUrl = cuts.small.uri;
+        } else if (cuts.xsmall.uri !== '' && typeof cuts.xsmall.uri !== 'undefined') {
+            this.imageUrl = cuts.xsmall.uri;
+        } else if (cuts.mini.uri !== '' && typeof cuts.mini.uri !== 'undefined') {
+            this.imageUrl = cuts.mini.uri;
+        } else if (cuts.mini1x1.uri !== '' && typeof cuts.mini1x1.uri !== 'undefined') {
+            this.imageUrl = cuts.mini1x1.uri;
+        } else {
+            this.imageUrl = 'http://placehold.it/1600x900';
+        }
+    } else {
+        this.imageUrl = 'http://placehold.it/1600x900';
+    }
+
+    this.byLine = byLine;
+}
+
+ /*
  * ## Task 2 (of 2)
  *
  * Configure the project to execute ESLint on all JavaScript files in the
