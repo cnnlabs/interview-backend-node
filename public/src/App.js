@@ -13,15 +13,16 @@ class App extends Component {
     
     render() {
         return (
-          
-            <breaking-news>Breaking News</breaking-news>
-            <detailed-break>Insert longer Text here</detailed-break>
-            <cnn-banner>
-                <cnn-logo></cnn-logo>
-                <upper-menu></upper-menu>
-                <lower-menu></lower-menu>
-            </cnn-banner>
+          <div className="App">
+            <div className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h2>Welcome to React</h2>
+            </div>
+            <p className="App-intro">
+              To get started, edit <code>src/App.js</code> and save to reload.
+            </p>
             <Article/>
+          </div>
         );
     }
 }
