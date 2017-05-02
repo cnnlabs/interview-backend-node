@@ -2,10 +2,22 @@
   "name": "interview-backend-node",
   "version": "0.1.0",
   "description": "Interview - Backend Node",
-  "scripts": {},
-  "engines": {
-    "node": "5.8.0"
+  "scripts": {
+    "start": "node server",
+    "test": "./node_modules/.bin/eslint ./**/*.js",
+    "fix": "./node_modules/.bin/eslint ./**/*.js --fix"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "engines": {
+    "node": "6.10.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "child_process": "^1.0.2",
+    "express": "^4.15.2",
+    "express-react-engine": "^1.0.0",
+    "jq-cli-wrapper": "^0.4.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {}
 }

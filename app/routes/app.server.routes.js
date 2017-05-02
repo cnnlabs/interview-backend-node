@@ -1,0 +1,1 @@
+var func=require('../controllers/functions.server.controller');module.exports = function(app) {    app.route('/api')         .get(func.json)    ;    };

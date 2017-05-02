@@ -1,5 +1,10 @@
 'use strict';
 
+var func= require('./app/controllers/functions.server.controller');
+
+module.exports=func.run;
+
+
 /*
  * ## Task 1 (of 2)
  *
