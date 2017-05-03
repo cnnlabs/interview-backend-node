@@ -1,5 +1,9 @@
 body {
-  margin: 0;
-  padding: 0;
+  margin: 170px 0 0 0;
+  
   font-family: sans-serif;
+}
+
+*{
+    overflow-x: hidden;
 }
