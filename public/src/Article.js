@@ -16,9 +16,9 @@ class Article extends Component {
             .then(datas => 
                 datas.text()
                 .then(function(datas){
-                        var data=datas.replace(/\n}\n{\n/g,"};{");
+                        var data=datas.replace(/\n}\n{\n/g,"};splitter;{");
                         data=data.replace(/\n/g,"");
-                        data=data.split(";");
+                        data=data.split(";splitter;");  
                         data=JSON.parse(JSON.stringify(data));
                         var datum=[];
                         for(var i=0; i<data.length;i++){
