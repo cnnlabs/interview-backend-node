@@ -9,7 +9,9 @@ class Article extends Component {
 //        this.state = {datas: []};
 //    }
     state = {datas: []}
-
+    
+    
+    
     componentDidMount() {
         var that=this;
         fetch('/api')
@@ -34,7 +36,7 @@ class Article extends Component {
     
     render() {
         return (
-            <div className="fixed">    
+            <div>    
                 {this.state.datas.map(data =>
                     <div className="articleContainer">
                         <h1 className="headline">{data.headline}</h1>

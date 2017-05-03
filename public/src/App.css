@@ -1,122 +1,24 @@
-*{
-    font-family: "Helvetica Neue";
-    font-size:15px;
-}
-breaking-news,
-detailed-news,
-cnn-banner{
-    display:flex;
-    position:fixed;
-    width:100vw;
-    padding-left:20%;
-    padding-right: 20%;
-    box-sizing: border-box;
+.App {
+  text-align: center;
 }
 
-
-
-breaking-news{
-    height: 30px;
-    background-color: #CC0000;
-    align-items: center;
-    top:0;
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
 }
 
-breaking-news > p{
-    margin:0;
-    font-weight: bold;
-    color:white;
-    text-transform: uppercase;
-    font-size: 90%;
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
 }
 
-detailed-news{
-    color: #CC0000;
-    align-items: center;
-    background-color: white;
-    height: 40px;
-    font-weight: bold;
-    font-size: 110%;
-    top: 30px;
-    width: 100vw;
+.App-intro {
+  font-size: large;
 }
 
-cnn-banner{
-    background-color: #0C0C0C;
-    height: 100px;
-    top: 70px;
-    box-shadow: 0px 38px 65px #888888
-}
-
-cnn-banner > div{
-    display:flex;
-    flex-direction: column;
-    width:100%;
-}
-
-cnn-banner > img{
-    height: 100%;
-    width:auto;
-    
-}
-
-div > banner-top,
-div > banner-middle,
-div > banner-bottom
-{
-    display: flex;
-    padding-left:20px;
-    height:33px;
-    flex: 1;
-    align-items: center;
-    color: #bfbfbf;
-}
-
-banner-top > p{
-    font-size:75%;
-}
-
- banner-top > p:first-child{
-    flex-grow: 15;
-}
-
- banner-top > p:nth-child(2),
- banner-top > p:last-child{
-    flex-grow: 2;
-    text-align: right;
-}
-
-banner-middle{
-    
-}
-
-banner-middle > p{
-    font-size:110%;
-    flex-grow: 1;
-}
-
-banner-middle > p:last-child{
-    flex-grow: 16;
-}
-
-banner-middle > p:hover{
-    font-weight: bold;
-    color:white
-}
-
-banner-bottom{
-    font-size:110%;
-    flex-grow: 1;
-    background-color: #bfbfbf;
-    
-}
-
-banner-bottom > p{
-    color:#0C0C0C;
-    flex-grow: 1;
-    font-weight: bold;
-}
-
-banner-bottom > p:last-child{
-    flex-grow:8;
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

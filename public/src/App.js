@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.png';
+import logo from './logo.svg';
 import Article from './Article';
 import './App.css';
 
@@ -13,46 +13,16 @@ class App extends Component {
     
     render() {
         return (
-            <div >
-                <div className="fixed">
-                    <breaking-news><p>Breaking News</p></breaking-news>
-                    <detailed-news><p>Young developer cannot believe she completed the practical. Tries best to keep it together until Noon.</p></detailed-news>
-                    <cnn-banner>
-                        <img src={logo}/>
-                        <div>
-                        <banner-top>
-                            <p>U.S. Edition</p>
-                            <p>Atlanta, Ga  22&#8457; </p>
-                            <p>Log in</p>
-                        </banner-top>
-                        
-                        <banner-middle>
-                            <p>News</p>
-                            <p>Video</p>
-                            <p>TV</p>
-                            <p>Opinions</p>
-                            <p>More...</p>
-
-                        </banner-middle>
-                        <banner-bottom>
-                            <p>U.S.</p>
-                            <p>World</p>
-                            <p>Politics</p>
-                            <p>Tech</p>
-                            <p>Health</p>
-                            <p>Entertainment</p>
-                            <p>Living</p>
-                            <p>Travel</p>
-                            <p>Money</p>
-                            <p>Sports</p>
-                        </banner-bottom>
-                        </div>
-                    </cnn-banner>
-                </div>
-                <Article/>
-            
-                <footer></footer>
+          <div className="App">
+            <div className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h2>Welcome to React</h2>
             </div>
+            <p className="App-intro">
+              To get started, edit <code>src/App.js</code> and save to reload.
+            </p>
+            <Article/>
+          </div>
         );
     }
 }
