@@ -1,1 +1,8 @@
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';//if value does not exist set it to 'development'var express = require('./config/express');//express application var app = express();//initialize express instancevar main=require('./main');app.listen(3001);module.exports = app;console.log('Server running at http://localhost:3001/ in a '+ process.env.NODE_ENV +' environment');main;
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';//if value does not exist set it to 'development'
+var config=require('./config/config'),
+    express = require('./config/express'),//express application 
+    app = express(),//initialize express instance
+    server=app.listen(config.port);
+    
+module.exports = server;
+console.log('Server running at '+config.host+config.port+'/ in a '+ process.env.NODE_ENV +' environment');
