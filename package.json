@@ -1,11 +1,29 @@
 {
-  "name": "interview-backend-node",
+  "name": "express-mongodb-seed",
   "version": "0.1.0",
-  "description": "Interview - Backend Node",
-  "scripts": {},
-  "engines": {
-    "node": "5.8.0"
+  "description": "Express Seed App",
+  "repository": {},
+  "license": "",
+  "readme": "",
+  "scripts": {
+    "start-api": "node server",
+    "start-db": "node db",
+    "lint": "./node_modules/.bin/eslint ./**/*.js --quiet",
+    "test": "mocha -R spec ./tests",
+    "fix": "./node_modules/.bin/eslint ./**/*.js --fix --quiet",
+    "start-mongod": "nohup mongod </dev/null >./logs/mongod.log 2>&1 &"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "engines": {
+    "node": "6.10.2"
+  },
+  "dependencies": {
+    "body-parser": "1.17.1",
+    "express": "4.15.2",
+    "mongoose": "4.10.6"
+  },
+  "devDependencies": {
+    "supertest": "3.0.0",
+    "eslint": "4.0.0",
+    "mocha": "3.4.2"
+  }
 }
